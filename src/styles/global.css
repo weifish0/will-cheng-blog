@@ -333,7 +333,7 @@ a:focus-visible { outline: 2px solid var(--blue); outline-offset: 5px; }
 .series-context-label { color: var(--blue); font-weight: 700; letter-spacing: .08em; }
 .series-context a { color: var(--ink); font-weight: 600; }
 .series-context a:hover { color: var(--blue); }
-.article-header h1 { margin-bottom: 22px; font-size: clamp(3rem, 6.5vw, 5.5rem); }
+.article-header h1 { margin-bottom: 22px; font-size: clamp(2.25rem, 5vw, 4.25rem); }
 .article-meta { display: flex; gap: 12px; color: var(--muted); font-size: 14px; }
 .article-layout { display: grid; grid-template-columns: minmax(0, 700px) 220px; gap: 96px; align-items: start; }
 .prose { font-family: var(--serif); font-size: 20px; line-height: 1.75; }
