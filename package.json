@@ -2,11 +2,12 @@
   "name": "will-cheng-blog",
   "type": "module",
   "version": "0.0.1",
+  "packageManager": "pnpm@11.5.0",
   "engines": {
     "node": ">=22.12.0"
   },
   "scripts": {
-    "dev": "astro dev",
+    "dev": "astro dev --background",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro"
