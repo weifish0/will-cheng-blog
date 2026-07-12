@@ -351,6 +351,20 @@ a:focus-visible { outline: 2px solid var(--blue); outline-offset: 5px; }
   margin: 48px auto;
   opacity: 0.8;
 }
+.prose blockquote {
+  border-left: 4px solid var(--blue);
+  background: var(--blue-soft);
+  padding: 18px 24px;
+  margin: 34px 0;
+  border-radius: 0 10px 10px 0;
+}
+.prose blockquote p {
+  font-style: italic;
+  margin-bottom: 16px;
+}
+.prose blockquote p:last-child {
+  margin-bottom: 0;
+}
 .prose ul, .prose ol { margin: 0 0 28px; padding-left: 1.35em; }
 .prose ul { list-style: disc; }
 .prose ol { list-style: decimal; }
