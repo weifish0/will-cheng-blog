@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { ArrowRight, ArrowUpRight } from '@lucide/astro';
 ---
 
 <BaseLayout title="關於 — Will Cheng" description="認識 Will Cheng，以及這個 Blog 為什麼存在。">
@@ -13,8 +14,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <p>我喜歡把複雜的事情拆開來看，也喜歡那些需要時間才會浮現答案的問題。這個網站是一份公開的筆記，也是一個讓未來的自己可以回來翻閱的地方。</p>
       <p>如果你對文章裡的內容有想法，歡迎透過 GitHub 或其他社群找到我。</p>
       <div class="about-links">
-        <a class="text-link" href="https://github.com/weifish0" rel="me">GitHub <span aria-hidden="true">↗</span></a>
-        <a class="text-link" href="/rss.xml">訂閱 RSS <span aria-hidden="true">→</span></a>
+        <a class="text-link" href="https://github.com/weifish0" rel="me">GitHub <ArrowUpRight aria-hidden="true" /></a>
+        <a class="text-link" href="/rss.xml">訂閱 RSS <ArrowRight aria-hidden="true" /></a>
       </div>
     </div>
   </section>

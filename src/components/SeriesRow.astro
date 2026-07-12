@@ -1,5 +1,6 @@
 ---
 import type { Series } from '../lib/content';
+import { ArrowRight } from '@lucide/astro';
 
 interface Props { series: Series; }
 const { series } = Astro.props;
@@ -12,6 +13,6 @@ const { series } = Astro.props;
   </div>
   <div class="series-row-meta">
     <span>{series.posts.length} 篇文章</span>
-    <span class="arrow" aria-hidden="true">→</span>
+    <ArrowRight class="arrow" aria-hidden="true" />
   </div>
 </a>

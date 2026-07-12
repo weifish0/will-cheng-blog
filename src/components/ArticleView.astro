@@ -1,6 +1,8 @@
 ---
 import type { Post } from '../lib/content';
 import { formatDate, getPostSeries, postHref, readingTime } from '../lib/content';
+import ArticleToc, { type TocItem } from './ArticleToc';
+import { ArrowLeft, ArrowRight, ArrowUpRight } from '@lucide/astro';
 
 interface Props {
   post: Post;
@@ -14,11 +16,16 @@ const currentIndex = seriesPosts.findIndex((entry) => entry.id === post.id);
 const previousPost = currentIndex > 0 ? seriesPosts[currentIndex - 1] : undefined;
 const nextPost = currentIndex >= 0 ? seriesPosts[currentIndex + 1] : undefined;
 const references = post.data.references ?? [];
+const tocItems: TocItem[] = (post.body ?? '')
+  .split('\n')
+  .map((line) => line.match(/^##\s+(.+)$/)?.[1]?.trim())
+  .filter((label): label is string => Boolean(label))
+  .map((label, index) => ({ id: `section-${index + 1}`, label }));
 ---
 
 <article class="article shell">
   <a class="back-link" href={series ? `/series/${series.slug}` : '/writing'}>
-    <span aria-hidden="true">←</span> {series ? '回到系列' : '全部文章'}
+    <ArrowLeft aria-hidden="true" /> {series ? '回到系列' : '全部文章'}
   </a>
 
   {series && (
@@ -43,12 +50,7 @@ const references = post.data.references ?? [];
 
   <div class="article-layout">
     <div class="prose article-prose"><Content /></div>
-    <aside class="toc" aria-label="文章導覽">
-      <p>On this page</p>
-      <a class="current" href="#start">開始閱讀</a>
-      <a href="#practice">實作方式</a>
-      <a href="#closing">最後的想法</a>
-    </aside>
+    <ArticleToc items={tocItems} client:load />
   </div>
 
   {references.length > 0 && (
@@ -61,7 +63,7 @@ const references = post.data.references ?? [];
         {references.map((reference) => (
           <li>
             <a href={reference.url} target="_blank" rel="noreferrer">
-              {reference.title} <span aria-hidden="true">↗</span>
+              {reference.title} <ArrowUpRight aria-hidden="true" />
             </a>
             {reference.note && <p>{reference.note}</p>}
           </li>
@@ -75,27 +77,15 @@ const references = post.data.references ?? [];
       {previousPost ? (
         <a href={postHref(previousPost)}>
           <span>上一篇</span>
-          <strong>← {previousPost.data.title}</strong>
+          <strong><ArrowLeft aria-hidden="true" /> {previousPost.data.title}</strong>
         </a>
       ) : <span></span>}
       {nextPost && (
         <a class="series-next" href={postHref(nextPost)}>
           <span>下一篇</span>
-          <strong>{nextPost.data.title} →</strong>
+          <strong>{nextPost.data.title} <ArrowRight aria-hidden="true" /></strong>
         </a>
       )}
     </nav>
   )}
 </article>
-
-<script>
-  const addHeadingIds = () => {
-    const ids = ['start', 'practice', 'closing'];
-    document.querySelectorAll('.article-prose h2').forEach((heading, index) => {
-      heading.id = ids[index] ?? `section-${index + 1}`;
-    });
-  };
-
-  addHeadingIds();
-  document.addEventListener('astro:page-load', addHeadingIds);
-</script>

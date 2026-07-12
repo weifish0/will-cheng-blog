@@ -1,39 +1,5 @@
-<button class="back-to-top" data-back-to-top type="button" aria-label="回到頁面頂端" aria-hidden="true" tabindex="-1">
-  <svg viewBox="0 0 24 24" aria-hidden="true">
-    <path d="m5 11 7-7 7 7M12 4v16"></path>
-  </svg>
-</button>
+---
+import BackToTopInteractive from './BackToTopInteractive';
+---
 
-<script is:inline>
-  (() => {
-    const threshold = 520;
-
-    const updateBackToTop = () => {
-      const button = document.querySelector('[data-back-to-top]');
-      if (!button) return;
-      const isVisible = (document.documentElement.scrollTop || window.scrollY) >= threshold;
-      button.classList.toggle('is-visible', isVisible);
-      button.setAttribute('aria-hidden', String(!isVisible));
-      button.tabIndex = isVisible ? 0 : -1;
-    };
-
-    if (!window.__willBackToTopBound) {
-      window.__willBackToTopBound = true;
-      window.addEventListener('scroll', updateBackToTop, { passive: true });
-      document.addEventListener('scroll', updateBackToTop, { passive: true, capture: true });
-      document.addEventListener('click', (event) => {
-        const button = event.target.closest('[data-back-to-top]');
-        if (!button) return;
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        const syncDuringScroll = () => {
-          updateBackToTop();
-          if (window.scrollY > 0) window.requestAnimationFrame(syncDuringScroll);
-        };
-        window.requestAnimationFrame(syncDuringScroll);
-      });
-    }
-
-    updateBackToTop();
-    document.addEventListener('astro:page-load', updateBackToTop);
-  })();
-</script>
+<BackToTopInteractive client:load />

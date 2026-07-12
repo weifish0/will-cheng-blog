@@ -3,6 +3,7 @@ import { getCollection, render } from 'astro:content';
 import ArticleView from '../../../components/ArticleView.astro';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { getSeries, postSlug, sortPosts } from '../../../lib/content';
+import { getPostOgImage } from '../../../lib/og';
 
 export const prerender = true;
 
@@ -18,6 +19,13 @@ const { post, seriesPosts } = Astro.props;
 const { Content } = await render(post);
 ---
 
-<BaseLayout title={`${post.data.title} — Will Cheng`} description={post.data.description} type="article">
+<BaseLayout
+  title={`${post.data.title} — Will Cheng`}
+  description={post.data.description}
+  type="article"
+  ogImage={getPostOgImage(post)}
+  ogImageAlt={`${post.data.title} — Will Cheng`}
+  publishedAt={post.data.publishedAt}
+>
   <ArticleView post={post} Content={Content} seriesPosts={seriesPosts} />
 </BaseLayout>
