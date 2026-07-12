@@ -11,7 +11,7 @@ pnpm dev
 
 `pnpm dev` 會以 background mode 啟動 Astro。開啟 <http://localhost:4321> 查看網站；需要管理背景伺服器時使用 `astro dev status`、`astro dev logs`、`astro dev stop`。
 
-文章放在 `src/content/posts/`，可以直接用 Markdown/Markdoc 編輯。系列文章使用資料夾歸檔，例如 `src/content/posts/building-with-intention/01-quiet-systems.mdoc`；每篇文章的 `seriesSlug`、`seriesTitle` 與 `seriesOrder` 會自動建立系列頁與上一篇／下一篇導覽。本機也可以開啟 <http://localhost:4321/keystatic> 使用內容編輯介面。
+文章放在 `src/content/posts/`，使用 `.md` 檔案編輯；底層仍由 Markdoc 解析，因此未來可以加入自訂內容元件。系列文章使用資料夾歸檔，例如 `src/content/posts/building-with-intention/01-quiet-systems.md`；每篇文章的 `seriesSlug`、`seriesTitle` 與 `seriesOrder` 會自動建立系列頁與上一篇／下一篇導覽。本機也可以開啟 <http://localhost:4321/keystatic> 使用內容編輯介面。
 
 ## 路由
 
@@ -37,7 +37,7 @@ pnpm dev
 
 ```text
 src/content/posts/building-with-intention/
-├─ 01-quiet-systems.mdoc
+├─ 01-quiet-systems.md
 └─ images/
    └─ system-diagram.webp
 ```
@@ -50,4 +50,4 @@ src/content/posts/building-with-intention/
 
 完整說明請參考：[文章圖片管理指南](./docs/writing-with-images.md)。
 
-文章範本請參考：[`.mdoc` 文章撰寫範本](./docs/article-template.mdoc)；程式碼格式請參考：[文章程式碼指南](./docs/writing-code.md)。
+文章範本請參考：[`.md` 文章撰寫範本](./docs/article-template.md)；程式碼格式請參考：[文章程式碼指南](./docs/writing-code.md)。

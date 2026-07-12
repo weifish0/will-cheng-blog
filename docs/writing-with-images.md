@@ -10,8 +10,8 @@ Astro 官方建議可處理的本地圖片放在 `src/`，因為 Astro 可以在
 
 ```text
 src/content/posts/building-with-intention/
-├─ 01-quiet-systems.mdoc
-├─ 02-shipping-slowly.mdoc
+├─ 01-quiet-systems.md
+├─ 02-shipping-slowly.md
 └─ images/
    ├─ system-diagram.webp
    └─ shipping-notes.webp
@@ -21,7 +21,7 @@ src/content/posts/building-with-intention/
 
 ```text
 src/content/posts/standalone/
-├─ better-questions.mdoc
+├─ better-questions.md
 └─ images/
    └─ question-map.webp
 ```
@@ -48,7 +48,7 @@ src/content/posts/standalone/
 圖片後面繼續寫文章。
 ```
 
-路徑是「相對於目前的 `.mdoc` 檔案」，不是相對於專案根目錄。Astro 支援 Markdown 圖片語法，並會處理位於 `src/` 的本地圖片；圖片也可以放在內容檔案旁邊。[Images in Markdown](https://docs.astro.build/en/guides/images/#images-in-markdown-files)
+路徑是「相對於目前的 `.md` 檔案」，不是相對於專案根目錄。Astro 支援 Markdown 圖片語法，並會處理位於 `src/` 的本地圖片；圖片也可以放在內容檔案旁邊。[Images in Markdown](https://docs.astro.build/en/guides/images/#images-in-markdown-files)
 
 ## alt 文字怎麼寫
 

@@ -34,7 +34,7 @@ export default config({
           }),
           { label: '參考資料', description: '可留白；會顯示在文章正文下方' },
         ),
-        content: fields.markdoc({ label: '文章內容' }),
+        content: fields.markdoc({ label: '文章內容', extension: 'md' }),
       },
     }),
   },

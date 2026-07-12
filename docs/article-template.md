@@ -44,7 +44,7 @@ draft: true
 <!--
 使用方式：
 1. 複製這個檔案到 src/content/posts/ 下面的文章資料夾。
-2. 將檔名改成小寫英文，例如 01-my-article.mdoc。
+2. 將檔名改成小寫英文，例如 01-my-article.md。
 3. 填好上方 frontmatter。
 4. 發布前把 draft 改成 false。
 5. 刪除這些教學註解與尚未使用的區塊。
@@ -62,7 +62,7 @@ draft: true
 
 ```text
 src/content/posts/your-series-slug/
-├─ 01-my-article.mdoc
+├─ 01-my-article.md
 └─ images/
    ├─ diagram.webp
    └─ screenshot.png
