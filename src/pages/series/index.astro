@@ -8,15 +8,10 @@ const series = getSeries(sortPosts(await getCollection('posts')));
 ---
 
 <BaseLayout title="系列文章 — Will Cheng" description="Will Cheng 按主題整理的系列文章。">
-  <section class="archive shell">
-    <div class="archive-intro">
-      <p class="eyebrow">Series</p>
-      <h1>把幾篇文章，<br />放回同一張地圖。</h1>
-      <p>有些想法不適合一次說完。系列文章讓它們彼此連接，也讓閱讀可以慢慢展開。</p>
-    </div>
+  <section class="archive archive-plain shell">
     <div class="archive-list">
       <div class="section-heading">
-        <h2>所有系列</h2>
+        <h1 class="archive-title">所有系列</h1>
         <span class="muted">{series.length} 個系列</span>
       </div>
       <div class="series-list">

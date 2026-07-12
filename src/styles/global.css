@@ -150,12 +150,15 @@ a:focus-visible { outline: 2px solid var(--blue); outline-offset: 5px; }
 .series-row-meta .arrow { padding: 0; }
 
 .archive, .about { display: grid; grid-template-columns: 1fr 1.1fr; gap: 10%; padding-top: 108px; padding-bottom: 150px; }
+.archive-plain { display: block; padding-top: 78px; }
+.archive-plain .archive-list { padding-top: 0; }
 .archive-intro, .about-intro { align-self: start; position: sticky; top: 48px; }
 .eyebrow { margin: 0 0 20px; color: var(--blue); font-size: 12px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
 .archive-intro h1, .about-intro h1 { font-size: clamp(3.5rem, 6vw, 5.25rem); }
 .archive-intro > p:last-child { max-width: 360px; margin: 0; color: var(--muted); font-size: 17px; line-height: 1.6; }
 .archive-list { padding-top: 20px; }
 .archive-list .section-heading { margin-bottom: 12px; }
+.archive-title { margin: 0; font-family: var(--serif); font-size: 36px; font-weight: 400; letter-spacing: -.025em; line-height: 1.2; }
 
 .about-copy { padding-top: 15px; }
 .about-links { display: flex; flex-wrap: wrap; gap: 28px; margin-top: 42px; }
