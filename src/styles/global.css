@@ -338,6 +338,19 @@ a:focus-visible { outline: 2px solid var(--blue); outline-offset: 5px; }
 .article-layout { display: grid; grid-template-columns: minmax(0, 700px) 220px; gap: 96px; align-items: start; }
 .prose { font-family: var(--serif); font-size: 20px; line-height: 1.75; }
 .prose p { margin: 0 0 28px; }
+.prose hr {
+  border: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg, 
+    transparent 0%, 
+    var(--line) 20%, 
+    var(--line) 80%, 
+    transparent 100%
+  );
+  margin: 48px auto;
+  opacity: 0.8;
+}
 .prose ul, .prose ol { margin: 0 0 28px; padding-left: 1.35em; }
 .prose ul { list-style: disc; }
 .prose ol { list-style: decimal; }
