@@ -37,9 +37,16 @@ const canonical = new URL(Astro.url.pathname, 'https://blog.will-cheng.com');
     <title>{title}</title>
     <script is:inline>
       (() => {
-        const stored = localStorage.getItem('will-theme');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        document.documentElement.dataset.theme = stored || (prefersDark ? 'dark' : 'light');
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        const applySystemTheme = () => {
+          document.documentElement.dataset.theme = mediaQuery.matches ? 'dark' : 'light';
+        };
+
+        applySystemTheme();
+        if (!window.__willSystemThemeBound) {
+          window.__willSystemThemeBound = true;
+          mediaQuery.addEventListener('change', applySystemTheme);
+        }
       })();
     </script>
     <ClientRouter />
@@ -69,7 +76,6 @@ const canonical = new URL(Astro.url.pathname, 'https://blog.will-cheng.com');
         if (!button) return;
         const nextTheme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
         document.documentElement.dataset.theme = nextTheme;
-        localStorage.setItem('will-theme', nextTheme);
         setThemeControlState();
       });
     }
