@@ -34,6 +34,13 @@ const canonical = new URL(Astro.url.pathname, 'https://blog.will-cheng.com');
     <link rel="alternate" type="application/rss+xml" title="Will Cheng RSS" href="/rss.xml" />
     <link rel="icon" href="/favicon.svg" />
     <title>{title}</title>
+    <script is:inline>
+      (() => {
+        const stored = localStorage.getItem('will-theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.documentElement.dataset.theme = stored || (prefersDark ? 'dark' : 'light');
+      })();
+    </script>
     <ClientRouter />
   </head>
   <body>
@@ -42,3 +49,30 @@ const canonical = new URL(Astro.url.pathname, 'https://blog.will-cheng.com');
     <SiteFooter />
   </body>
 </html>
+
+<script is:inline>
+  (() => {
+    const setThemeControlState = () => {
+      const isDark = document.documentElement.dataset.theme === 'dark';
+      document.querySelectorAll('[data-theme-toggle]').forEach((button) => {
+        button.setAttribute('aria-pressed', String(isDark));
+        button.setAttribute('aria-label', isDark ? '切換為亮色模式' : '切換為暗色模式');
+      });
+    };
+
+    if (!window.__willThemeToggleBound) {
+      window.__willThemeToggleBound = true;
+      document.addEventListener('click', (event) => {
+        const button = event.target.closest('[data-theme-toggle]');
+        if (!button) return;
+        const nextTheme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+        document.documentElement.dataset.theme = nextTheme;
+        localStorage.setItem('will-theme', nextTheme);
+        setThemeControlState();
+      });
+    }
+
+    setThemeControlState();
+    document.addEventListener('astro:page-load', setThemeControlState);
+  })();
+</script>

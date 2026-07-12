@@ -10,6 +10,18 @@
   --serif: Iowan Old Style, Baskerville, "Times New Roman", serif;
   --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --shell: min(1120px, calc(100vw - 96px));
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --ink: #f4f6ff;
+  --muted: #aeb7cb;
+  --line: rgba(191, 208, 255, .17);
+  --blue: #9db4ff;
+  --blue-soft: rgba(45, 66, 119, .42);
+  --paper: #070a13;
+  --surface: rgba(14, 21, 40, .58);
+  color-scheme: dark;
 }
 
 * { box-sizing: border-box; }
@@ -24,6 +36,16 @@ body {
   font-size: 16px;
   line-height: 1.7;
   text-rendering: optimizeLegibility;
+  transition: color .35s ease, background .35s ease;
+}
+
+:root[data-theme="dark"] body {
+  background-color: #070a13;
+  background-image:
+    radial-gradient(circle at 12% 0%, rgba(38, 74, 169, .28), transparent 34%),
+    radial-gradient(circle at 88% 22%, rgba(21, 42, 103, .24), transparent 32%),
+    linear-gradient(135deg, #05060c 0%, #0b1020 48%, #070a13 100%);
+  background-attachment: fixed;
 }
 
 a { color: inherit; text-decoration: none; }
@@ -35,7 +57,23 @@ a:focus-visible { outline: 2px solid var(--blue); outline-offset: 5px; }
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-block: 32px;
+  position: sticky;
+  top: 18px;
+  z-index: 20;
+  border: 1px solid rgba(28, 34, 52, .1);
+  border-radius: 999px;
+  padding: 14px 16px 14px 20px;
+  background: rgba(255, 255, 255, .78);
+  box-shadow: 0 12px 30px rgba(27, 35, 61, .06), inset 0 1px rgba(255, 255, 255, .8);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+  backdrop-filter: blur(18px) saturate(150%);
+  transition: border-color .35s ease, background .35s ease, box-shadow .35s ease;
+}
+
+:root[data-theme="dark"] .site-header {
+  border-color: rgba(173, 197, 255, .18);
+  background: rgba(10, 16, 33, .58);
+  box-shadow: 0 18px 46px rgba(0, 0, 0, .28), inset 0 1px rgba(226, 235, 255, .13);
 }
 
 .wordmark, .footer-mark {
@@ -45,14 +83,45 @@ a:focus-visible { outline: 2px solid var(--blue); outline-offset: 5px; }
   line-height: 1;
 }
 
-.site-nav, .site-footer nav {
+.header-actions, .site-nav, .site-footer nav {
   display: flex;
+  align-items: center;
+}
+
+.header-actions { gap: 20px; }
+
+.site-nav, .site-footer nav {
   gap: 28px;
   font-size: 14px;
 }
 
 .site-nav a, .site-footer nav a { color: var(--ink); transition: color .2s ease; }
 .site-nav a:hover, .site-nav a.active, .site-footer nav a:hover { color: var(--blue); }
+
+.theme-toggle {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border: 1px solid rgba(28, 34, 52, .12);
+  border-radius: 50%;
+  color: var(--ink);
+  background: rgba(255, 255, 255, .55);
+  cursor: pointer;
+  transition: transform .2s ease, color .2s ease, border-color .35s ease, background .35s ease;
+}
+
+.theme-toggle:hover { color: var(--blue); transform: rotate(10deg); }
+
+:root[data-theme="dark"] .theme-toggle {
+  border-color: rgba(173, 197, 255, .2);
+  background: rgba(143, 170, 255, .1);
+}
+
+.theme-icon { grid-area: 1 / 1; width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.7; }
+.theme-icon-moon { display: none; }
+:root[data-theme="dark"] .theme-icon-sun { display: none; }
+:root[data-theme="dark"] .theme-icon-moon { display: block; fill: currentColor; stroke: none; }
 
 .hero {
   display: grid;
@@ -159,6 +228,7 @@ a:focus-visible { outline: 2px solid var(--blue); outline-offset: 5px; }
 .archive-list { padding-top: 20px; }
 .archive-list .section-heading { margin-bottom: 12px; }
 .archive-title { margin: 0; font-family: var(--serif); font-size: 36px; font-weight: 400; letter-spacing: -.025em; line-height: 1.2; }
+.archive-plain .section-heading, .series-preview .section-heading { border-top: 0; padding-top: 0; }
 
 .about-copy { padding-top: 15px; }
 .about-links { display: flex; flex-wrap: wrap; gap: 28px; margin-top: 42px; }
@@ -233,7 +303,9 @@ a:focus-visible { outline: 2px solid var(--blue); outline-offset: 5px; }
 
 @media (max-width: 800px) {
   :root { --shell: min(100% - 48px, 640px); }
-  .site-header { padding-block: 25px; }
+  .site-header { top: 12px; }
+  .header-actions { gap: 14px; }
+  .site-nav { gap: 18px; }
   .hero { grid-template-columns: 4px minmax(0, 1fr); gap: 25px; padding-top: 65px; padding-bottom: 84px; }
   .hero-rule { min-height: 270px; }
   .hero-copy h1, .archive-intro h1, .about-intro h1, .article-header h1 { font-size: clamp(3rem, 13vw, 5rem); }
