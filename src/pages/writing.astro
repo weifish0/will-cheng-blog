@@ -1,0 +1,27 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostRow from '../components/PostRow.astro';
+import { sortPosts } from '../lib/content';
+
+const posts = sortPosts(await getCollection('posts'));
+---
+
+<BaseLayout title="寫作 — Will Cheng" description="Will Cheng 的文章、技術筆記，以及值得留下來的想法。">
+  <section class="archive shell">
+    <div class="archive-intro">
+      <p class="eyebrow">Writing</p>
+      <h1>寫下來，<br />讓想法有地方回來。</h1>
+      <p>關於軟體、設計、工作方式，以及生活裡那些慢慢變清楚的事情。</p>
+    </div>
+    <div class="archive-list">
+      <div class="section-heading">
+        <h2>全部文章</h2>
+        <span class="muted">{posts.length} 篇</span>
+      </div>
+      <div class="post-list">
+        {posts.map((post) => <PostRow post={post} />)}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

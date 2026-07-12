@@ -1,0 +1,51 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { formatDate, readingTime, sortPosts } from '../../lib/content';
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const posts = sortPosts(await getCollection('posts'));
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<BaseLayout title={`${post.data.title} — Will Cheng`} description={post.data.description} type="article">
+  <article class="article shell">
+    <a class="back-link" href="/writing"><span aria-hidden="true">←</span> 全部文章</a>
+    <header class="article-header">
+      <p class="eyebrow">{post.data.category}</p>
+      <h1>{post.data.title}</h1>
+      <div class="article-meta">
+        <time datetime={post.data.publishedAt.toISOString()}>{formatDate(post.data.publishedAt)}</time>
+        <span aria-hidden="true">·</span>
+        <span>{readingTime(post)}</span>
+      </div>
+    </header>
+    <div class="article-layout">
+      <div class="prose article-prose"><Content /></div>
+      <aside class="toc" aria-label="文章導覽">
+        <p>On this page</p>
+        <a class="current" href="#start">開始閱讀</a>
+        <a href="#practice">實作方式</a>
+        <a href="#closing">最後的想法</a>
+      </aside>
+    </div>
+  </article>
+</BaseLayout>
+
+<script>
+  const addHeadingIds = () => {
+    const ids = ['start', 'practice', 'closing'];
+    document.querySelectorAll('.article-prose h2').forEach((heading, index) => {
+      heading.id = ids[index] ?? `section-${index + 1}`;
+    });
+  };
+
+  addHeadingIds();
+  document.addEventListener('astro:page-load', addHeadingIds);
+</script>

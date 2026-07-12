@@ -1,0 +1,44 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import SiteFooter from '../components/SiteFooter.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  type?: 'website' | 'article';
+}
+
+const {
+  title = 'Will Cheng — 關於建造、思考，與保持好奇的筆記。',
+  description = '一個人的文章、技術筆記，以及值得留下來的想法。',
+  type = 'website',
+} = Astro.props;
+const canonical = new URL(Astro.url.pathname, 'https://blog.will-cheng.com');
+---
+
+<!doctype html>
+<html lang="zh-Hant-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={type} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="Will Cheng" />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" type="application/rss+xml" title="Will Cheng RSS" href="/rss.xml" />
+    <link rel="icon" href="/favicon.svg" />
+    <title>{title}</title>
+    <ClientRouter />
+  </head>
+  <body>
+    <SiteHeader />
+    <main transition:animate="fade"><slot /></main>
+    <SiteFooter />
+  </body>
+</html>
