@@ -49,3 +49,5 @@ src/content/posts/building-with-intention/
 ```
 
 完整說明請參考：[文章圖片管理指南](./docs/writing-with-images.md)。
+
+文章範本請參考：[`.mdoc` 文章撰寫範本](./docs/article-template.mdoc)；程式碼格式請參考：[文章程式碼指南](./docs/writing-code.md)。
