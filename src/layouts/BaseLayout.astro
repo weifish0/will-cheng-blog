@@ -1,5 +1,6 @@
 ---
 import { ClientRouter } from 'astro:transitions';
+import BackToTop from '../components/BackToTop.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import '../styles/global.css';
@@ -46,6 +47,7 @@ const canonical = new URL(Astro.url.pathname, 'https://blog.will-cheng.com');
   <body>
     <SiteHeader />
     <main transition:animate="fade"><slot /></main>
+    <BackToTop />
     <SiteFooter />
   </body>
 </html>
