@@ -19,6 +19,11 @@ interface Props {
   path: string;
 }
 
+type Theme = 'dark' | 'light';
+type ThemeWindow = Window & { __willChengTheme?: Theme };
+
+const themeStorageKey = 'will-cheng-theme';
+
 const links = [
   { href: '/writing', label: '寫作' },
   { href: '/series', label: '系列' },
@@ -37,9 +42,23 @@ export default function SiteHeaderInteractive({ path }: Props) {
   useEffect(() => {
     const root = document.documentElement;
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const themeWindow = window as ThemeWindow;
 
+    const getStoredTheme = () => {
+      try {
+        const storedTheme = window.localStorage.getItem(themeStorageKey);
+        return storedTheme === 'dark' || storedTheme === 'light' ? storedTheme : null;
+      } catch {
+        return themeWindow.__willChengTheme ?? null;
+      }
+    };
     const syncState = () => setIsDark(root.dataset.theme === 'dark');
     const applySystemTheme = () => {
+      if (getStoredTheme()) {
+        syncState();
+        return;
+      }
+
       root.dataset.theme = mediaQuery.matches ? 'dark' : 'light';
       syncState();
     };
@@ -47,8 +66,12 @@ export default function SiteHeaderInteractive({ path }: Props) {
 
     syncState();
     mediaQuery.addEventListener('change', handleThemeChange);
+    document.addEventListener('astro:page-load', syncState);
 
-    return () => mediaQuery.removeEventListener('change', handleThemeChange);
+    return () => {
+      mediaQuery.removeEventListener('change', handleThemeChange);
+      document.removeEventListener('astro:page-load', syncState);
+    };
   }, []);
 
   useEffect(() => {
@@ -60,7 +83,15 @@ export default function SiteHeaderInteractive({ path }: Props) {
   }, []);
 
   const toggleTheme = (pressed: boolean) => {
-    document.documentElement.dataset.theme = pressed ? 'dark' : 'light';
+    const nextTheme = pressed ? 'dark' : 'light';
+    const themeWindow = window as ThemeWindow;
+    document.documentElement.dataset.theme = nextTheme;
+    themeWindow.__willChengTheme = nextTheme;
+    try {
+      window.localStorage.setItem(themeStorageKey, nextTheme);
+    } catch {
+      // Keep the current page usable when storage is unavailable.
+    }
     setIsDark(pressed);
   };
 

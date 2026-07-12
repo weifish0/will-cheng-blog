@@ -59,8 +59,23 @@ const ogImageUrl = new URL(ogImage, siteUrl);
     <title>{title}</title>
     <script is:inline>
       (() => {
-        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-        document.documentElement.dataset.theme = mediaQuery.matches ? 'dark' : 'light';
+        const themeStorageKey = 'will-cheng-theme';
+        const getStoredTheme = () => {
+          try {
+            const storedTheme = window.localStorage.getItem(themeStorageKey);
+            return storedTheme === 'dark' || storedTheme === 'light' ? storedTheme : null;
+          } catch {
+            return window.__willChengTheme ?? null;
+          }
+        };
+        const applyTheme = () => {
+          const storedTheme = getStoredTheme();
+          const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          document.documentElement.dataset.theme = storedTheme ?? systemTheme;
+        };
+
+        applyTheme();
+        document.addEventListener('astro:page-load', applyTheme);
       })();
     </script>
     <ClientRouter />
