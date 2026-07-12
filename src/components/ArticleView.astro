@@ -89,3 +89,39 @@ const tocItems: TocItem[] = (post.body ?? '')
     </nav>
   )}
 </article>
+
+<script>
+  const enhanceCodeBlocks = () => {
+    document.querySelectorAll<HTMLElement>('.article-prose pre.astro-code').forEach((pre) => {
+      if (pre.closest('[data-code-block]')) return;
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'code-block';
+      wrapper.dataset.codeBlock = '';
+      pre.parentNode?.insertBefore(wrapper, pre);
+      wrapper.append(pre);
+
+      const button = document.createElement('button');
+      button.className = 'code-copy';
+      button.type = 'button';
+      button.setAttribute('aria-label', '複製程式碼');
+      button.textContent = '複製';
+      button.addEventListener('click', async () => {
+        const code = pre.querySelector('code')?.textContent ?? pre.textContent ?? '';
+
+        try {
+          await navigator.clipboard.writeText(code);
+          button.textContent = '已複製';
+          window.setTimeout(() => { button.textContent = '複製'; }, 1600);
+        } catch {
+          button.textContent = '複製失敗';
+          window.setTimeout(() => { button.textContent = '複製'; }, 1600);
+        }
+      });
+      wrapper.append(button);
+    });
+  };
+
+  enhanceCodeBlocks();
+  document.addEventListener('astro:page-load', enhanceCodeBlocks);
+</script>

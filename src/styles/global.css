@@ -341,6 +341,57 @@ a:focus-visible { outline: 2px solid var(--blue); outline-offset: 5px; }
 .prose h2 { margin: 55px 0 14px; font-family: var(--serif); font-size: 34px; font-weight: 400; letter-spacing: -.025em; line-height: 1.2; }
 .prose h2:first-child { margin-top: 0; }
 .prose a { color: var(--blue); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+.prose :not(pre) > code {
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 2px 6px;
+  color: var(--blue);
+  background: var(--blue-soft);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: .82em;
+}
+.code-block { position: relative; margin: 34px 0; }
+.article-prose .astro-code {
+  overflow: auto;
+  margin: 0;
+  border: 1px solid rgba(28, 34, 52, .12);
+  border-radius: 16px;
+  padding: 26px 24px;
+  box-shadow: 0 16px 36px rgba(27, 35, 61, .08);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 14px;
+  line-height: 1.7;
+  tab-size: 2;
+}
+.article-prose .astro-code code { font-family: inherit; }
+.article-prose .code-copy {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: 1px solid rgba(28, 34, 52, .14);
+  border-radius: 7px;
+  padding: 5px 9px;
+  color: var(--muted);
+  background: rgba(255, 255, 255, .72);
+  font-family: var(--sans);
+  font-size: 12px;
+  line-height: 1.2;
+  cursor: pointer;
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  transition: color .2s ease, border-color .2s ease, background .2s ease;
+}
+.article-prose .code-copy:hover, .article-prose .code-copy:focus-visible { color: var(--blue); border-color: var(--blue); }
+:root[data-theme="dark"] .article-prose .astro-code,
+:root[data-theme="dark"] .article-prose .astro-code span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important;
+  font-style: var(--shiki-dark-font-style) !important;
+  font-weight: var(--shiki-dark-font-weight) !important;
+  text-decoration: var(--shiki-dark-text-decoration) !important;
+}
+:root[data-theme="dark"] .article-prose .astro-code { border-color: rgba(173, 197, 255, .2); box-shadow: 0 18px 42px rgba(0, 0, 0, .28); }
+:root[data-theme="dark"] .article-prose .code-copy { border-color: rgba(173, 197, 255, .22); color: var(--muted); background: rgba(13, 21, 43, .72); }
 .toc { border-left: 1px solid var(--line); padding-left: 24px; font-size: 14px; }
 .toc p { margin: 0 0 18px; color: var(--ink); font-weight: 600; }
 .toc-mobile { display: none; }
