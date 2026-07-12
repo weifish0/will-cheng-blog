@@ -298,6 +298,23 @@ a:focus-visible { outline: 2px solid var(--blue); outline-offset: 5px; }
 .toc a:hover, .toc a.current { color: var(--blue); }
 .toc a.current { border-left: 2px solid var(--blue); margin-left: -26px; padding-left: 24px; }
 
+.references {
+  max-width: 700px;
+  border-top: 1px solid var(--line);
+  margin-top: 72px;
+  padding-top: 22px;
+}
+.references-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; }
+.references-heading h2 { margin: 0; font-size: 14px; font-weight: 700; letter-spacing: .04em; }
+.references-heading span { color: var(--muted); font-size: 12px; }
+.references-list { margin: 18px 0 0; padding-left: 22px; color: var(--muted); font-size: 14px; line-height: 1.5; }
+.references-list li { padding-left: 6px; margin-bottom: 12px; }
+.references-list li:last-child { margin-bottom: 0; }
+.references-list a { color: var(--ink); text-decoration: none; }
+.references-list a:hover { color: var(--blue); }
+.references-list a span { color: var(--blue); }
+.references-list p { margin: 3px 0 0; color: var(--muted); font-size: 13px; }
+
 .series-nav {
   display: grid;
   grid-template-columns: 1fr 1fr;

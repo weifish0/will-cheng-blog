@@ -13,6 +13,7 @@ const series = getPostSeries(post);
 const currentIndex = seriesPosts.findIndex((entry) => entry.id === post.id);
 const previousPost = currentIndex > 0 ? seriesPosts[currentIndex - 1] : undefined;
 const nextPost = currentIndex >= 0 ? seriesPosts[currentIndex + 1] : undefined;
+const references = post.data.references ?? [];
 ---
 
 <article class="article shell">
@@ -49,6 +50,25 @@ const nextPost = currentIndex >= 0 ? seriesPosts[currentIndex + 1] : undefined;
       <a href="#closing">最後的想法</a>
     </aside>
   </div>
+
+  {references.length > 0 && (
+    <section class="references" aria-labelledby="references-title">
+      <div class="references-heading">
+        <h2 id="references-title">參考資料</h2>
+        <span>{references.length} 筆</span>
+      </div>
+      <ol class="references-list">
+        {references.map((reference) => (
+          <li>
+            <a href={reference.url} target="_blank" rel="noreferrer">
+              {reference.title} <span aria-hidden="true">↗</span>
+            </a>
+            {reference.note && <p>{reference.note}</p>}
+          </li>
+        ))}
+      </ol>
+    </section>
+  )}
 
   {series && (
     <nav class="series-nav" aria-label="系列文章導覽">

@@ -26,6 +26,14 @@ export default config({
         seriesTitle: fields.text({ label: '系列名稱', description: '留白代表單篇文章' }),
         seriesDescription: fields.text({ label: '系列簡介', multiline: true }),
         seriesOrder: fields.integer({ label: '系列順序', defaultValue: 1 }),
+        references: fields.array(
+          fields.object({
+            title: fields.text({ label: '名稱' }),
+            url: fields.url({ label: '網址', validation: { isRequired: true } }),
+            note: fields.text({ label: '補充說明', multiline: true }),
+          }),
+          { label: '參考資料', description: '可留白；會顯示在文章正文下方' },
+        ),
         content: fields.markdoc({ label: '文章內容' }),
       },
     }),
