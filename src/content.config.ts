@@ -10,6 +10,10 @@ const posts = defineCollection({
     category: z.string().default('思考'),
     featured: z.boolean().default(false),
     draft: z.boolean().default(false),
+    seriesSlug: z.string().optional(),
+    seriesTitle: z.string().optional(),
+    seriesDescription: z.string().optional(),
+    seriesOrder: z.coerce.number().int().positive().optional(),
   }),
 });
 

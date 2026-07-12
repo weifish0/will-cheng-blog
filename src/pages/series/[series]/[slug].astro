@@ -1,0 +1,23 @@
+---
+import { getCollection, render } from 'astro:content';
+import ArticleView from '../../../components/ArticleView.astro';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getSeries, postSlug, sortPosts } from '../../../lib/content';
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const series = getSeries(sortPosts(await getCollection('posts')));
+  return series.flatMap((item) => item.posts.map((post) => ({
+    params: { series: item.slug, slug: postSlug(post) },
+    props: { post, seriesPosts: item.posts },
+  })));
+}
+
+const { post, seriesPosts } = Astro.props;
+const { Content } = await render(post);
+---
+
+<BaseLayout title={`${post.data.title} — Will Cheng`} description={post.data.description} type="article">
+  <ArticleView post={post} Content={Content} seriesPosts={seriesPosts} />
+</BaseLayout>

@@ -1,0 +1,33 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostRow from '../../components/PostRow.astro';
+import { getSeries, sortPosts } from '../../lib/content';
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const series = getSeries(sortPosts(await getCollection('posts')));
+  return series.map((item) => ({ params: { series: item.slug }, props: { series: item } }));
+}
+
+const { series } = Astro.props;
+---
+
+<BaseLayout title={`${series.title} — 系列文章`} description={series.description}>
+  <section class="series-detail shell">
+    <a class="back-link" href="/series"><span aria-hidden="true">←</span> 所有系列</a>
+    <div class="series-detail-header">
+      <p class="eyebrow">Series</p>
+      <h1>{series.title}</h1>
+      <p>{series.description}</p>
+      <span class="muted">{series.posts.length} 篇文章</span>
+    </div>
+    <div class="series-detail-list">
+      <div class="section-heading"><h2>系列內容</h2></div>
+      <div class="post-list">
+        {series.posts.map((post) => <PostRow post={post} />)}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

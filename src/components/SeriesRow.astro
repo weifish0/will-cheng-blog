@@ -1,0 +1,17 @@
+---
+import type { Series } from '../lib/content';
+
+interface Props { series: Series; }
+const { series } = Astro.props;
+---
+
+<a class="series-row" href={`/series/${series.slug}`}>
+  <div>
+    <h3>{series.title}</h3>
+    <p>{series.description}</p>
+  </div>
+  <div class="series-row-meta">
+    <span>{series.posts.length} 篇文章</span>
+    <span class="arrow" aria-hidden="true">→</span>
+  </div>
+</a>

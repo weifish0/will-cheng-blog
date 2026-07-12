@@ -6,7 +6,7 @@ export default config({
     posts: collection({
       label: '文章',
       slugField: 'title',
-      path: 'src/content/posts/*',
+      path: 'src/content/posts/*/*',
       format: { contentField: 'content' },
       schema: {
         title: fields.slug({ name: { label: '標題' } }),
@@ -22,6 +22,10 @@ export default config({
           defaultValue: '思考',
         }),
         featured: fields.checkbox({ label: '精選文章', defaultValue: false }),
+        seriesSlug: fields.slug({ name: { label: '系列 slug' }, description: '例如: building-with-intention' }),
+        seriesTitle: fields.text({ label: '系列名稱', description: '留白代表單篇文章' }),
+        seriesDescription: fields.text({ label: '系列簡介', multiline: true }),
+        seriesOrder: fields.integer({ label: '系列順序', defaultValue: 1 }),
         content: fields.markdoc({ label: '文章內容' }),
       },
     }),

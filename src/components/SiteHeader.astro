@@ -6,6 +6,7 @@ const path = Astro.url.pathname;
   <a class="wordmark" href="/" aria-label="回到首頁">WILL CHENG</a>
   <nav class="site-nav" aria-label="主要導覽">
     <a class:list={{ active: path.startsWith('/writing') || path.startsWith('/posts') }} href="/writing">寫作</a>
+    <a class:list={{ active: path.startsWith('/series') }} href="/series">系列</a>
     <a class:list={{ active: path.startsWith('/about') }} href="/about">關於</a>
   </nav>
 </header>

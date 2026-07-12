@@ -1,12 +1,12 @@
 ---
 import type { Post } from '../lib/content';
-import { formatDate } from '../lib/content';
+import { formatDate, postHref } from '../lib/content';
 
 interface Props { post: Post; }
 const { post } = Astro.props;
 ---
 
-<a class="post-row" href={`/posts/${post.id}`}>
+<a class="post-row" href={postHref(post)}>
   <time datetime={post.data.publishedAt.toISOString()}>{formatDate(post.data.publishedAt)}</time>
   <div class="post-row-copy">
     <h3>{post.data.title}</h3>

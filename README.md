@@ -11,12 +11,15 @@ npm run dev
 
 開啟 <http://localhost:4321> 查看網站。
 
-文章放在 `src/content/posts/`，可以直接用 Markdown/Markdoc 編輯；本機也可以開啟 <http://localhost:4321/keystatic> 使用內容編輯介面。
+文章放在 `src/content/posts/`，可以直接用 Markdown/Markdoc 編輯。系列文章使用資料夾歸檔，例如 `src/content/posts/building-with-intention/01-quiet-systems.mdoc`；每篇文章的 `seriesSlug`、`seriesTitle` 與 `seriesOrder` 會自動建立系列頁與上一篇／下一篇導覽。本機也可以開啟 <http://localhost:4321/keystatic> 使用內容編輯介面。
 
 ## 路由
 
 - `/`：首頁
 - `/writing`：文章列表
+- `/series`：系列文章列表
+- `/series/:series`：系列總覽
+- `/series/:series/:slug`：系列文章閱讀頁
 - `/about`：關於
 - `/posts/:slug`：文章閱讀頁
 - `/rss.xml`：RSS feed
