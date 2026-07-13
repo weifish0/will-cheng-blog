@@ -32,6 +32,7 @@ function TocLinks({
           key={item.id}
           className={item.id === activeId ? 'is-active' : undefined}
           href={`#${item.id}`}
+          aria-current={item.id === activeId ? 'location' : undefined}
           onClick={onSelect}
         >
           {item.label}
@@ -46,11 +47,9 @@ export default function ArticleToc({ items }: Props) {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
-    let observer: IntersectionObserver | undefined;
+    let animationFrame = 0;
 
     const setupScrollSpy = () => {
-      observer?.disconnect();
-
       const headings = Array.from(document.querySelectorAll<HTMLElement>('.article-prose h2'))
         .slice(0, items.length);
 
@@ -59,27 +58,45 @@ export default function ArticleToc({ items }: Props) {
         if (item) heading.id = item.id;
       });
 
-      setActiveId(headings[0]?.id ?? items[0]?.id ?? '');
-      observer = new IntersectionObserver(
-        (entries) => {
-          const visible = entries
-            .filter((entry) => entry.isIntersecting)
-            .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+      const updateActiveHeading = () => {
+        animationFrame = 0;
+        const readingLine = window.scrollY + Math.min(180, window.innerHeight * 0.28);
+        let currentId = headings[0]?.id ?? items[0]?.id ?? '';
 
-          if (visible[0]) setActiveId((visible[0].target as HTMLElement).id);
-        },
-        { rootMargin: '-12% 0px -70% 0px', threshold: [0, 1] },
-      );
+        headings.forEach((heading) => {
+          const headingTop = heading.getBoundingClientRect().top + window.scrollY;
+          if (headingTop <= readingLine) currentId = heading.id;
+        });
 
-      headings.forEach((heading) => observer?.observe(heading));
+        setActiveId(currentId);
+      };
+
+      const requestActiveHeadingUpdate = () => {
+        if (animationFrame) return;
+        animationFrame = window.requestAnimationFrame(updateActiveHeading);
+      };
+
+      updateActiveHeading();
+      window.addEventListener('scroll', requestActiveHeadingUpdate, { passive: true });
+      window.addEventListener('resize', requestActiveHeadingUpdate);
+
+      return () => {
+        window.removeEventListener('scroll', requestActiveHeadingUpdate);
+        window.removeEventListener('resize', requestActiveHeadingUpdate);
+        if (animationFrame) window.cancelAnimationFrame(animationFrame);
+      };
     };
 
-    setupScrollSpy();
-    document.addEventListener('astro:page-load', setupScrollSpy);
+    let cleanup = setupScrollSpy();
+    const handlePageLoad = () => {
+      cleanup?.();
+      cleanup = setupScrollSpy();
+    };
+    document.addEventListener('astro:page-load', handlePageLoad);
 
     return () => {
-      observer?.disconnect();
-      document.removeEventListener('astro:page-load', setupScrollSpy);
+      cleanup?.();
+      document.removeEventListener('astro:page-load', handlePageLoad);
     };
   }, [items]);
 

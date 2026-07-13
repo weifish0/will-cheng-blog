@@ -449,12 +449,49 @@ a:focus-visible { outline: 2px solid var(--blue); outline-offset: 5px; }
 }
 :root[data-theme="dark"] .article-prose .astro-code { border-color: rgba(173, 197, 255, .2); box-shadow: 0 18px 42px rgba(0, 0, 0, .28); }
 :root[data-theme="dark"] .article-prose .code-copy { border-color: rgba(173, 197, 255, .22); color: var(--muted); background: rgba(13, 21, 43, .72); }
-.toc { border-left: 1px solid var(--line); padding-left: 24px; font-size: 14px; }
-.toc p { margin: 0 0 18px; color: var(--ink); font-weight: 600; }
+.toc {
+  position: sticky;
+  top: 112px;
+  max-height: calc(100vh - 144px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border-left: 1px solid var(--line);
+  padding: 18px 8px 18px 24px;
+  font-size: 14px;
+  scrollbar-color: var(--line) transparent;
+  scrollbar-width: thin;
+}
+.toc p { margin: 0 0 16px; color: var(--ink); font-weight: 600; }
 .toc-mobile { display: none; }
-.toc-links a { display: block; margin: 0 0 13px; color: var(--muted); line-height: 1.4; transition: color .2s ease; }
-.toc-links a:hover, .toc-links a.is-active { color: var(--blue); }
-.toc-links a.is-active { border-left: 2px solid var(--blue); margin-left: -26px; padding-left: 24px; }
+.toc-links { display: grid; gap: 4px; }
+.toc-links a {
+  position: relative;
+  display: block;
+  margin: 0;
+  border-radius: 8px;
+  padding: 9px 12px 9px 14px;
+  color: var(--muted);
+  line-height: 1.4;
+  transition: color .25s ease, background-color .25s ease, transform .25s ease;
+}
+.toc-links a::before {
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
+  left: 4px;
+  width: 2px;
+  border-radius: 999px;
+  background: var(--blue);
+  content: '';
+  transform: scaleY(0);
+  transform-origin: center;
+  transition: transform .25s ease;
+}
+.toc-links a:hover { color: var(--ink); background: var(--blue-soft); transform: translateX(2px); }
+.toc-links a.is-active { color: var(--blue); background: var(--blue-soft); }
+.toc-links a.is-active::before { transform: scaleY(1); }
+
+.article-prose h2 { scroll-margin-top: 128px; }
 
 .toc-mobile-trigger {
   display: flex;
