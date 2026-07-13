@@ -16,6 +16,28 @@ interface Props {
   items: TocItem[];
 }
 
+function ReadingProgress({ value }: { value: number }) {
+  return (
+    <div
+      className="toc-progress"
+      role="progressbar"
+      aria-label="文章閱讀進度"
+      aria-valuemin={0}
+      aria-valuemax={100}
+      aria-valuenow={value}
+      aria-valuetext={`${value}%`}
+    >
+      <div className="toc-progress-meta">
+        <span>閱讀進度</span>
+        <span>{value}%</span>
+      </div>
+      <div className="toc-progress-track" aria-hidden="true">
+        <span className="toc-progress-value" style={{ width: `${value}%` }} />
+      </div>
+    </div>
+  );
+}
+
 function TocLinks({
   items,
   activeId,
@@ -65,6 +87,7 @@ function TocLinks({
 
 export default function ArticleToc({ items }: Props) {
   const [activeId, setActiveId] = useState(items[0]?.id ?? '');
+  const [readingProgress, setReadingProgress] = useState(0);
   const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
@@ -90,6 +113,18 @@ export default function ArticleToc({ items }: Props) {
         });
 
         setActiveId(currentId);
+
+        const article = document.querySelector<HTMLElement>('.article-prose');
+        if (article) {
+          const articleTop = article.getBoundingClientRect().top + window.scrollY;
+          const articleBottom = article.getBoundingClientRect().bottom + window.scrollY;
+          const articleLength = articleBottom - articleTop;
+          const nextProgress = articleLength > 0
+            ? Math.round(Math.min(1, Math.max(0, (readingLine - articleTop) / articleLength)) * 100)
+            : 0;
+
+          setReadingProgress((previous) => previous === nextProgress ? previous : nextProgress);
+        }
       };
 
       const requestActiveHeadingUpdate = () => {
@@ -127,6 +162,7 @@ export default function ArticleToc({ items }: Props) {
     <>
       <aside className="toc" aria-label="本文導覽">
         <p>本文導覽</p>
+        <ReadingProgress value={readingProgress} />
         <TocLinks items={items} activeId={activeId} />
       </aside>
 

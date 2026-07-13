@@ -462,7 +462,29 @@ a:focus-visible { outline: 2px solid var(--blue); outline-offset: 5px; }
   scrollbar-color: var(--line) transparent;
   scrollbar-width: thin;
 }
-.toc p { margin: 0 0 16px; color: var(--ink); font-weight: 600; }
+.toc p { margin: 0 0 10px; color: var(--ink); font-weight: 600; }
+.toc-progress { margin-bottom: 18px; }
+.toc-progress-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 7px;
+  color: var(--muted);
+  font-size: 11px;
+  letter-spacing: .04em;
+}
+.toc-progress-track {
+  height: 3px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--line);
+}
+.toc-progress-value {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--blue);
+  transition: width .35s ease;
+}
 .toc-mobile { display: none; }
 .toc-links { display: grid; gap: 4px; }
 .toc-links a {
