@@ -336,6 +336,7 @@ a:focus-visible { outline: 2px solid var(--blue); outline-offset: 5px; }
 .article-header h1 { margin-bottom: 22px; font-size: clamp(2.25rem, 5vw, 4.25rem); }
 .article-meta { display: flex; gap: 12px; color: var(--muted); font-size: 14px; }
 .article-layout { display: grid; grid-template-columns: minmax(0, 700px) 220px; gap: 96px; align-items: start; }
+.article-body { min-width: 0; }
 .prose { font-family: var(--serif); font-size: 20px; line-height: 1.75; }
 .prose p { margin: 0 0 28px; }
 .prose hr {

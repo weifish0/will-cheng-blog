@@ -49,31 +49,34 @@ const tocItems: TocItem[] = (post.body ?? '')
   </header>
 
   <div class="article-layout">
-    <div class="prose article-prose"><Content /></div>
+    <div class="article-body">
+      <div class="prose article-prose"><Content /></div>
+
+      {references.length > 0 && (
+        <section class="references" aria-labelledby="references-title">
+          <div class="references-heading">
+            <h2 id="references-title">參考資料</h2>
+            <span>{references.length} 筆</span>
+          </div>
+          <ol class="references-list">
+            {references.map((reference) => (
+              <li>
+                <a class="reference-link" href={reference.url} target="_blank" rel="noreferrer">
+                  <span class="reference-title">
+                    <span class="reference-title-text">{reference.title}</span>
+                    <ArrowUpRight aria-hidden="true" />
+                  </span>
+                  {reference.note && <span class="reference-note">{reference.note}</span>}
+                </a>
+              </li>
+            ))}
+          </ol>
+        </section>
+      )}
+
+    </div>
     <ArticleToc items={tocItems} client:load />
   </div>
-
-  {references.length > 0 && (
-    <section class="references" aria-labelledby="references-title">
-      <div class="references-heading">
-        <h2 id="references-title">參考資料</h2>
-        <span>{references.length} 筆</span>
-      </div>
-      <ol class="references-list">
-        {references.map((reference) => (
-          <li>
-            <a class="reference-link" href={reference.url} target="_blank" rel="noreferrer">
-              <span class="reference-title">
-                <span class="reference-title-text">{reference.title}</span>
-                <ArrowUpRight aria-hidden="true" />
-              </span>
-              {reference.note && <span class="reference-note">{reference.note}</span>}
-            </a>
-          </li>
-        ))}
-      </ol>
-    </section>
-  )}
 
   {series && (
     <nav class="series-nav" aria-label="系列文章導覽">

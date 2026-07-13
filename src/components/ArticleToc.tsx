@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 
 import {
@@ -25,6 +25,26 @@ function TocLinks({
   activeId: string;
   onSelect?: () => void;
 }) {
+  const activeLinkRef = useRef<HTMLAnchorElement | null>(null);
+
+  useEffect(() => {
+    const link = activeLinkRef.current;
+    const container = link?.closest<HTMLElement>('.toc');
+    if (!link || !container) return;
+
+    const linkTop = link.offsetTop;
+    const linkBottom = linkTop + link.offsetHeight;
+    const visibleTop = container.scrollTop;
+    const visibleBottom = visibleTop + container.clientHeight;
+
+    if (linkTop < visibleTop || linkBottom > visibleBottom) {
+      container.scrollTo({
+        top: Math.max(0, linkTop - (container.clientHeight - link.offsetHeight) / 2),
+        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+      });
+    }
+  }, [activeId]);
+
   return (
     <nav className="toc-links" aria-label="文章章節">
       {items.map((item) => (
@@ -34,6 +54,7 @@ function TocLinks({
           href={`#${item.id}`}
           aria-current={item.id === activeId ? 'location' : undefined}
           onClick={onSelect}
+          ref={item.id === activeId ? activeLinkRef : undefined}
         >
           {item.label}
         </a>
